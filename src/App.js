@@ -13,10 +13,33 @@ import { useState } from "react";
 function App() {
   const [cart, setCart] = useState([]);
   function handleProductDelete(id) {
-    console.log("Deleting product" + id);
+    const updateCart = cart.filter((product) => product.id !== id);
+    setCart(updateCart);
   }
   function handleProductAdd(newProduct) {
-    console.log("Addding product" + newProduct.id);
+    const existingProduct = cart.find(
+      (product) => product.id === newProduct.id
+    );
+    if (existingProduct) {
+      const updateCart = cart.map((product) => {
+        if (product.id === newProduct.id) {
+          return {
+            ...product,
+            quantity: product.quantity + 1,
+          };
+        }
+        return product;
+      });
+      setCart(updateCart);
+    } else {
+      setCart([
+        ...cart,
+        {
+          ...newProduct,
+          quantity: 1,
+        },
+      ]);
+    }
   }
   return (
     <BrowserRouter>
@@ -42,7 +65,7 @@ function App() {
           <Route path="nutrition" element={<ProductDetailNutrition />}></Route>
           <Route path="storage" element={<ProductDetailStorage />}></Route>
         </Route>
-        <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/cart" element={<Cart cart={cart} />}></Route>
       </Routes>
     </BrowserRouter>
   );

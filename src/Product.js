@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import Button from "./Button.js";
 
 export default function Product(props) {
@@ -5,13 +6,15 @@ export default function Product(props) {
   return (
     <div className="product">
       <div className="product-image-container">
-        <img
-          src={details.image}
-          width="100"
-          height="100"
-          className="product-image"
-          alt={details.name}
-        />
+        <Link to={`${details.id}`}>
+          <img
+            src={details.image}
+            width="100"
+            height="100"
+            className="product-image"
+            alt={details.name}
+          />
+        </Link>
         <div className="product-quantity-container"></div>
         <div className="product-quantity">0</div>
       </div>
@@ -21,11 +24,14 @@ export default function Product(props) {
       </div>
       <div className="product-checkout">
         <div>
-            <Button outline className="product-delete">x</Button>
+          <Button 
+          outline
+          onClick={()=>props.onProductDelete(details.id)} 
+          className="product-delete">
+            x
+          </Button>
         </div>
-        <Button>
-            ${details.price}
-        </Button>
+        <Button outline onClick={()=>props.onProductAdd(details)}>${details.price}</Button>
       </div>
     </div>
   );

@@ -1,13 +1,10 @@
+import { useContext } from "react";
+import { AppContext } from "./AppContext.js";
+
 export default function Cart(props) {
-  const { cart } = props;
-  const totalPrice = cart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
-  const cartCount = props.cart.reduce(
-    (total, product) => total + product.quantity,
-    0
-  );
+  const app = useContext(AppContext);
+  const cart = app.cart;
+  const totalPrice = app.getTotalPrice();
 
   return (
     <div className="cart-layout">

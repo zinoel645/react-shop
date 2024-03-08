@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import Button from "./Button.js";
+import { useContext } from "react";
+import { AppContext } from "./AppContext.js";
 
 export default function Product(props) {
   const { details } = props;
-  const productFromCart = props.cart.find(
-    (product) => product.id === details.id
-  );
+  const app = useContext(AppContext);
+  const productFromCart = app.getProductFromCart(details.id);
+
   const quantity = productFromCart ? productFromCart.quantity : 0;
   return (
     <div className="product">
@@ -34,14 +36,14 @@ export default function Product(props) {
           {quantity > 0 && (
             <Button
               outline
-              onClick={() => props.onProductDelete(details.id)}
+              onClick={() => app.onProductDelete(details.id)}
               className="product-delete"
             >
               x
             </Button>
           )}
         </div>
-        <Button outline onClick={() => props.onProductAdd(details)}>
+        <Button outline onClick={() => app.onProductAdd(details)}>
           ${details.price}
         </Button>
       </div>

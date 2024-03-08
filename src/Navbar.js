@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "./AppContext.js";
 
 export default function Navbar(props) {
-  const cartCount = props.cart.reduce(
-    (total, product) => total + product.quantity,
-    0
-  );
+  const app = useContext(AppContext);
+  const cartCount = app.getCartCount();
+
   return (
     <nav className="navbar">
       <NavLink to="/" className="nav-brand">

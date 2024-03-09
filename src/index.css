@@ -29,6 +29,14 @@ body {
   margin: 0;
 }
 
+/*dark theme*/
+body.dark {
+  color: white;
+  --neutral-5: #222;
+  --surface-color: #444;
+  --surface-shadow: #222;
+}
+
 h1 {
   font-size: 36px;
   font-weight: 600;
